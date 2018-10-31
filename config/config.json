@@ -1,0 +1,13 @@
+{
+    "test" : {
+      "PORT" : 8080,
+      "MONGODB_URI": "mongodb://localhost:27017/Finances",
+      "JWT_SECRET": "ndli4j2rnalwjn4dlqij2ndlq4kjnalew"
+    },
+    "development":{
+      "PORT" : 8080,
+      "MONGODB_URI": "mongodb://localhost:27017/Finances",
+      "JWT_SECRET": "asjndml23j4nr2p90r8jwq49cm2o92"
+    }
+  
+}

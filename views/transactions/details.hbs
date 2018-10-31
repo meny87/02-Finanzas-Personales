@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+
+
+<body class="bg-light">
+
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="http://www.cdcouncil.com/images/yellowIcon_barGraph.png" alt=""
+                width="72" height="72">
+            <h2>Finanzas Personales </h2>
+            <h4> {{title}}</h4>
+            <hr class="mb-4">
+            <p class="lead">Periodo : {{period}}</p>
+            <hr class="mb-4">
+        </div>
+
+        <div class="alert alert-info" role="alert">
+            <h4>Ingresos</h4>
+        </div>
+
+        <table class="table table-hover table-sm">
+            <thead class="table-active">
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Importe</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Cuenta</th>
+                    <th scope="col">Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {{#incomesTable}}
+                <tr>
+                    <th scope="row">{{date}}</th>
+
+                    <td>${{amount}}</td>
+                    <td>{{category}}</td>
+                    <td>{{account}}</td>
+                    <td>{{description}}</td>
+                </tr>
+                {{/incomesTable}}
+
+            </tbody>
+        </table>
+
+        <div class="alert alert-info" role="alert">
+
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <h4> Gastos </h4>
+                </div>
+                <div class="col-auto">
+                    <input type="search" class="light-table-filter" data-table="order-table" placeholder="Filtrar...">
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-hover table-sm order-table" id="myTable">
+            <thead class="table-active">
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Importe</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Cuenta</th>
+                    <th scope="col">Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {{#outcomesTable}}
+                <tr>
+                    <th scope="row">{{date}}</th>
+                    <td>${{amount}}</td>
+                    <td>{{category}}</td>
+                    <td>{{account}}</td>
+                    <td>{{description}}</td>
+                </tr>
+                {{/outcomesTable}}
+
+            </tbody>
+        </table>
+
+        <hr class="mb-4">
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions">Registrar nueva Transacción</a>
+            </div>
+            <div class="col-md-6 mb-3">
+                <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Ir a Dashboard</a>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2017-2018 Meny</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script>
+    <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict';
+
+                window.addEventListener('load', function () {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+    </script>
+
+    <script>
+        (function (document) {
+            'use strict';
+
+            var LightTableFilter = (function (Arr) {
+
+                var _input;
+
+                function _onInputEvent(e) {
+                    _input = e.target;
+                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+                    Arr.forEach.call(tables, function (table) {
+                        Arr.forEach.call(table.tBodies, function (tbody) {
+                            Arr.forEach.call(tbody.rows, _filter);
+                        });
+                    });
+                }
+
+                function _filter(row) {
+                    var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+                }
+
+                return {
+                    init: function () {
+                        var inputs = document.getElementsByClassName('light-table-filter');
+                        Arr.forEach.call(inputs, function (input) {
+                            input.oninput = _onInputEvent;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            document.addEventListener('readystatechange', function () {
+                if (document.readyState === 'complete') {
+                    LightTableFilter.init();
+                }
+            });
+
+        })(document);
+    </script>
+</body>
+
+</html>

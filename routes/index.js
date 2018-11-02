@@ -10,7 +10,8 @@ const Transaction = require('../models/transactions');
 
 
 
-const period = moment().format('M[-]YY');
+//const period = moment().format('M[-]YY');
+const period = '10-18';
 const currentDate = moment();
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
@@ -38,8 +39,9 @@ router.get('/', function (req, res, next) {
     Account.countDocuments({}),
     Budget.find({ type: 'Outcome', period }),
     Budget.find({ type: 'Income', period }),
+    Budget.find({ type: 'Transfer', period }),
     Transaction.find({ period }).select('type amount category account')
-  ]).then(([debitAccounts, creditAccounts, cashAccounts, allAccounts, accountCount, outcomesBudget, incomesBudget, allTransactions]) => {
+  ]).then(([debitAccounts, creditAccounts, cashAccounts, allAccounts, accountCount, outcomesBudget, incomesBudget, transfersBudget, allTransactions]) => {
 
     var outBudgetTable = outcomesBudget.map((budget) => {
       acm = 0;
@@ -63,6 +65,24 @@ router.get('/', function (req, res, next) {
       acm = 0;
       allTransactions.forEach((transaction) => {
         if (transaction.type === 'Income' && transaction.category === budget.category) {
+          acm += transaction.amount;
+        }
+      });
+      return {
+        cat: budget.category,
+        prev: formatMoney(budget.amount),
+        real: formatMoney(acm),
+        diff: formatMoney(budget.amount - acm),
+        prevNotFormat: budget.amount,
+        realNotFormat: acm,
+        diffNotFormat: budget.amount - acm
+      };
+    });
+
+    var transferBudgetTable = transfersBudget.map((budget) => {
+      acm = 0;
+      allTransactions.forEach((transaction) => {
+        if (transaction.type === 'Transfer' && transaction.category === budget.category) {
           acm += transaction.amount;
         }
       });
@@ -169,7 +189,10 @@ router.get('/', function (req, res, next) {
       totalOutDiff: formatMoney(_.sumBy(outBudgetTable, element => element.diffNotFormat)),
       totalInPrev: formatMoney(_.sumBy(inBudgetTable, element => element.prevNotFormat)),
       totalInReal: formatMoney(_.sumBy(inBudgetTable, element => element.realNotFormat)),
-      totalInDiff: formatMoney(_.sumBy(inBudgetTable, element => element.diffNotFormat))
+      totalInDiff: formatMoney(_.sumBy(inBudgetTable, element => element.diffNotFormat)),
+      totalTrPrev: formatMoney(_.sumBy(transferBudgetTable, element => element.prevNotFormat)),
+      totalTrReal: formatMoney(_.sumBy(transferBudgetTable, element => element.realNotFormat)),
+      totalTrDiff: formatMoney(_.sumBy(transferBudgetTable, element => element.diffNotFormat))
     };
 
     var data = {
@@ -183,6 +206,7 @@ router.get('/', function (req, res, next) {
       accountCount,
       outBudgetTable,
       inBudgetTable,
+      transferBudgetTable,
       period,
       summaryInfo
     };

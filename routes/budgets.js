@@ -5,8 +5,7 @@ const moment = require('moment');
 
 const Budget = require('../models/budgets');
 
-const period = moment().format('M[-]YY');
-const currentDate = moment();
+const period=require('./utils/getPeriod');
 
 router.get('/create', (req, res) => {
     res.render('budgets/create', {

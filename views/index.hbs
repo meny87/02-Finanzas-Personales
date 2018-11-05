@@ -1,324 +1,268 @@
-<!doctype html>
-<html lang="en">
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <h4 class="card-header">
+                Ahorro
+            </h4>
+            <div class="card-body">
+                <p>INGRESO TOTAL: ${{summaryInfo.totalIncome}} </p>
+                <p>GASTO TOTAL: ${{summaryInfo.totalOutcome}} </p>
+                <hr>
+                <h5>AHORRO ACTUAL: ${{summaryInfo.totalSaving}}</h5>
+                <h1>{{summaryInfo.totalSavingPerc}}%</h1>
 
-<body class="bg-light">
-    <div class="container">
-        <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="http://www.cdcouncil.com/images/yellowIcon_barGraph.png" alt=""
-                width="72" height="72">
-            <h2>Finanzas Personales </h2>
-            <h4> {{title}}</h4>
-            <hr class="mb-4">
-            <p class="lead">Periodo : {{period}}</p>
-            <hr class="mb-4">
-
-            <div class="row">
-                <div class="col-8">
-                    <div class="card">
-                        <h4 class="card-header">
-                            Ahorro
-                        </h4>
-                        <div class="card-body">
-                            <p>INGRESO TOTAL: ${{summaryInfo.totalIncome}} </p>
-                            <p>GASTO TOTAL: ${{summaryInfo.totalOutcome}} </p>
-                            <hr>
-                            <h5>AHORRO ACTUAL: ${{summaryInfo.totalSaving}}</h5>
-                            <h1>{{summaryInfo.totalSavingPerc}}%</h1>
-
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card">
-                        <h4 class="card-header">
-                            Deuda
-                        </h4>
-                        <div class="card-body">
-                            <p>DEBO: ${{summaryInfo.totalIncome}} </p>
-                            <p>ME DEBEN: ${{summaryInfo.totalOutcome}} </p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-4">
-                    <div class="card">
-                        <h4 class="card-header">
-                            Opciones
-                        </h4>
-                        <div class="card-body">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5>Transacciones</h5>
-                                    <hr class="mb-4">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions" role="button">Registrar</a>
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/view" role="button">Ver
-                                        Todas</a>
-                                </div>
-                            </div>
-                            <br>
-                            <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Pagar
-                                Tarjeta de Crédito</a>
-                            <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Retiro
-                                de Efectivo</a>
-                            <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Administrar
-                                Deudas</a>
-                        </div>
-                    </div>
-                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <h4 class="card-header">
+                Deuda
+            </h4>
+            <div class="card-body">
+                <p>DEBO: ${{summaryInfo.totalIncome}} </p>
+                <p>ME DEBEN: ${{summaryInfo.totalOutcome}} </p>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-4 order-md-2 mb-4">
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <h4 class="card-header">
+                Opciones
+            </h4>
+            <div class="card-body">
                 <div class="card">
-                    <h4 class="card-header d-flex justify-content-between align-items-center mb-3">
-                        <span class="text">Cuentas</span>
-                        <span class="badge badge-secondary badge-pill">{{accountCount}}</span>
-                        <a href="/accounts/create" class="badge badge-light">
-                            <i class="far fa-edit"></i>
-                        </a>
-                    </h4>
                     <div class="card-body">
-                        <p class="card-text">
-
-                            <ul class="list-group mb-3">
-                                <li class="list-group-item d-flex justify-content-between bg-light">
-                                    <div class="text-primary">
-                                        <h6 class="my-0">EFECTIVO</h6>
-                                    </div>
-                                    <span class="text-primary">${{cashSumUp}}</span>
-                                </li>
-
-                                {{#cashAccounts}}
-                                {{#if this}}
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">
-
-                                            <small class="text-muted">Balance Inicial: ${{formattedBalance}}</small><br>
-                                            <small class="text-muted">Gastos del Mes: ${{acmOutcome}}</small><br>
-                                            <small class="text-muted">Retiros del Mes: ${{acmIncome}}</small>
-                                        </h6>
-                                    </div>
-                                </li>
-                                {{/if}}
-                                {{/cashAccounts}}
-
-                                <li class="list-group-item d-flex justify-content-between bg-light">
-                                    <div class="text-success">
-                                        <h6 class="my-0">DÉBITO</h6>
-                                    </div>
-                                    <span class="text-success">${{debitSumUp}}</span>
-                                </li>
-
-                                {{#debitAccounts}}
-                                {{#if this}}
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">
-                                            <p>{{name}}</p>
-
-                                            <small class="text-muted">Balance Inicial: ${{formattedBalance}}</small><br>
-                                            <small class="text-muted">Gastos del Mes: ${{acmOutcome}}</small><br>
-                                            <small class="text-muted">Depósitos del Mes: ${{acmIncome}}</small>
-                                        </h6>
-                                    </div>
-                                    <span class="text-muted">
-                                        <p>${{totalBalance}}</p>
-                                    </span>
-                                </li>
-                                {{/if}}
-                                {{/debitAccounts}}
-
-
-                                <li class="list-group-item d-flex justify-content-between bg-light">
-                                    <div class="text-warning">
-                                        <h6 class="my-0">CRÉDITO</h6>
-                                    </div>
-                                    <span class="text-warning">-${{creditSumUp}}</span>
-                                </li>
-
-                                {{#creditAccounts}}
-                                {{#if this}}
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">{{name}}</h6>
-                                        <small class="text-muted">Vencimiento: {{dueDay}}</small> <br>
-                                        <small class="text-muted">Pago: {{paymentDay}}</small>
-                                        <hr>
-                                        <small class="text-muted">Balance Inicial: ${{formattedBalance}}</small><br>
-                                        <small class="text-muted">Gastos del Mes: ${{acmOutcome}}</small><br>
-                                        <small class="text-muted">Depósitos del Mes: ${{acmIncome}}</small>
-
-                                    </div>
-                                    <span class="text-muted">${{totalBalance}}</span>
-                                </li>
-                                {{/if}}
-                                {{/creditAccounts}}
-
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Total</span>
-                                    <strong>${{grandTotalBalance}}</strong>
-                                </li>
-                            </ul>
-                        </p>
+                        <h5>Transacciones</h5>
+                        <hr class="mb-4">
+                        <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions" role="button">Registrar</a>
+                        <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/view" role="button">Ver
+                            Todas</a>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-8 order-md-1">
-                <div class="alert alert-primary" role="alert">
-                    <h4 class="text-center">Presupuesto Mensual</h4>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-auto mr-auto">
-                                <h4 class="card-title">Ganancias</h4>
-                            </div>
-                            <div class="col-auto">
-                                <a class="btn btn-outline-dark btn-sm" href="/budgets/create?type=Income" role="button">Agregar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <p class="card-text">
-                            <table class="table table-sm">
-                                <thead class="table-active">
-                                    <tr>
-                                        <th scope="col">Categoría</th>
-                                        <th scope="col">Previsto</th>
-                                        <th scope="col">Real</th>
-                                        <th scope="col">Diferencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#inBudgetTable}}
-                                    {{#if diffNotFormat}}
-                                    <tr>
-                                        {{else}}
-                                    <tr class="table-warning">
-                                        {{/if}}
-                                        <th scope="row">{{cat}}</th>
-                                        <td>${{prev}}</td>
-                                        <td>${{real}}</td>
-                                        <td>${{diff}}</td>
-                                    </tr>
-                                    {{/inBudgetTable}}
-
-                                    <tr>
-                                        <th>Totales</th>
-                                        <th>${{summaryInfo.totalInPrev}}</th>
-                                        <th>${{summaryInfo.totalInReal}}</th>
-                                        <th>${{summaryInfo.totalInDiff}}</th>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </p>
-
-                    </div>
-                </div>
-
                 <br>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-auto mr-auto">
-                                <h4 class="card-title">Gastos</h4>
-                            </div>
-                            <div class="col-auto">
-                                <a class="btn btn-outline-dark btn-sm" href="/budgets/create?type=Outcome" role="button">Agregar</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-
-
-                        <p class="card-text">
-                            <table class="table table-sm">
-                                <thead class="table-active">
-                                    <tr>
-                                        <th scope="col">Categoría</th>
-                                        <th scope="col">Previsto</th>
-                                        <th scope="col">Real</th>
-                                        <th scope="col">Diferencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#outBudgetTable}}
-                                    {{#if diffNotFormat}}
-                                    <tr>
-                                        {{else}}
-                                    <tr class="table-secondary">
-                                        {{/if}}
-                                        <th scope="row">{{cat}}</th>
-                                        <td>${{prev}}</td>
-                                        <td>${{real}}</td>
-                                        <td>${{diff}}</td>
-                                    </tr>
-                                    {{/outBudgetTable}}
-                                    <tr>
-                                        <th>Totales</th>
-                                        <th>${{summaryInfo.totalOutPrev}}</th>
-                                        <th>${{summaryInfo.totalOutReal}}</th>
-                                        <th>${{summaryInfo.totalOutDiff}}</th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </p>
-
-                    </div>
-                </div>
-
+                <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Pagar
+                    Tarjeta de Crédito</a>
+                <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Retiro
+                    de Efectivo</a>
+                <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Administrar
+                    Deudas</a>
             </div>
+        </div>
+    </div>
+</div>
+</div>
 
-            <hr class="mb-4">
+<div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+        <div class="card">
+            <h4 class="card-header d-flex justify-content-between align-items-center mb-3">
+                <span class="text">Cuentas</span>
+                <span class="badge badge-secondary badge-pill">{{accountCount}}</span>
+                <a href="/accounts/create" class="badge badge-light">
+                    <i class="far fa-edit"></i>
+                </a>
+            </h4>
+            <div class="card-body">
+                <p class="card-text">
 
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex justify-content-between bg-light">
+                            <div class="text-primary">
+                                <h6 class="my-0">EFECTIVO</h6>
+                            </div>
+                            <span class="text-primary">${{cashSumUp}}</span>
+                        </li>
+
+                        {{#cashAccounts}}
+                        {{#if this}}
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">
+
+                                    <small class="text-muted">Balance Inicial: ${{formattedBalance}}</small><br>
+                                    <small class="text-muted">Gastos del Mes: ${{acmOutcome}}</small><br>
+                                    <small class="text-muted">Retiros del Mes: ${{acmIncome}}</small>
+                                </h6>
+                            </div>
+                        </li>
+                        {{/if}}
+                        {{/cashAccounts}}
+
+                        <li class="list-group-item d-flex justify-content-between bg-light">
+                            <div class="text-success">
+                                <h6 class="my-0">DÉBITO</h6>
+                            </div>
+                            <span class="text-success">${{debitSumUp}}</span>
+                        </li>
+
+                        {{#debitAccounts}}
+                        {{#if this}}
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">
+                                    <p>{{name}}</p>
+
+                                    <small class="text-muted">Balance Inicial: ${{formattedBalance}}</small><br>
+                                    <small class="text-muted">Gastos del Mes: ${{acmOutcome}}</small><br>
+                                    <small class="text-muted">Depósitos del Mes: ${{acmIncome}}</small>
+                                </h6>
+                            </div>
+                            <span class="text-muted">
+                                <p>${{totalBalance}}</p>
+                            </span>
+                        </li>
+                        {{/if}}
+                        {{/debitAccounts}}
+
+
+                        <li class="list-group-item d-flex justify-content-between bg-light">
+                            <div class="text-warning">
+                                <h6 class="my-0">CRÉDITO</h6>
+                            </div>
+                            <span class="text-warning">-${{creditSumUp}}</span>
+                        </li>
+
+                        {{#creditAccounts}}
+                        {{#if this}}
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">{{name}}</h6>
+                                <small class="text-muted">Vencimiento: {{dueDay}}</small> <br>
+                                <small class="text-muted">Pago: {{paymentDay}}</small>
+                                <hr>
+                                <small class="text-muted">Balance Inicial: ${{formattedBalance}}</small><br>
+                                <small class="text-muted">Gastos del Mes: ${{acmOutcome}}</small><br>
+                                <small class="text-muted">Depósitos del Mes: ${{acmIncome}}</small>
+
+                            </div>
+                            <span class="text-muted">${{totalBalance}}</span>
+                        </li>
+                        {{/if}}
+                        {{/creditAccounts}}
+
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total</span>
+                            <strong>${{grandTotalBalance}}</strong>
+                        </li>
+                    </ul>
+                </p>
+            </div>
         </div>
     </div>
 
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2018 Meny</p>
-    </footer>
+    <div class="col-md-8 order-md-1">
+        <div class="alert alert-primary" role="alert">
+            <h4 class="text-center">Presupuesto Mensual</h4>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-auto mr-auto">
+                        <h4 class="card-title">Ganancias</h4>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-outline-dark btn-sm" href="/budgets/create?type=Income" role="button">Agregar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <p class="card-text">
+                    <table class="table table-sm">
+                        <thead class="table-active">
+                            <tr>
+                                <th scope="col">Categoría</th>
+                                <th scope="col">Previsto</th>
+                                <th scope="col">Real</th>
+                                <th scope="col">Diferencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#inBudgetTable}}
+                            {{#if diffNotFormat}}
+                            <tr>
+                                {{else}}
+                            <tr class="table-warning">
+                                {{/if}}
+                                <th scope="row">{{cat}}</th>
+                                <td>${{prev}}</td>
+                                <td>${{real}}</td>
+                                <td>${{diff}}</td>
+                            </tr>
+                            {{/inBudgetTable}}
+
+                            <tr>
+                                <th>Totales</th>
+                                <th>${{summaryInfo.totalInPrev}}</th>
+                                <th>${{summaryInfo.totalInReal}}</th>
+                                <th>${{summaryInfo.totalInDiff}}</th>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </p>
+
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-auto mr-auto">
+                        <h4 class="card-title">Gastos</h4>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-outline-dark btn-sm" href="/budgets/create?type=Outcome" role="button">Agregar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+
+                <p class="card-text">
+                    <table class="table table-sm">
+                        <thead class="table-active">
+                            <tr>
+                                <th scope="col">Categoría</th>
+                                <th scope="col">Previsto</th>
+                                <th scope="col">Real</th>
+                                <th scope="col">Diferencia</th>
+                                <th scope="col">Restante</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#outBudgetTable}}
+                            {{#if alert}}
+                            <tr>
+                                {{else}}
+                            <tr class="table-danger">
+                                {{/if}}
+                                <th scope="row">{{cat}}</th>
+                                <td>${{prev}}</td>
+                                <td>${{real}}</td>
+                                <td>${{diff}}</td>
+                                <td>{{perc}}%</td>
+                            </tr>
+                            {{/outBudgetTable}}
+                            <tr>
+                                <th>Totales</th>
+                                <th>${{summaryInfo.totalOutPrev}}</th>
+                                <th>${{summaryInfo.totalOutReal}}</th>
+                                <th>${{summaryInfo.totalOutDiff}}</th>
+                                <th></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p>
+
+            </div>
+        </div>
+
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script>
-
-
-    <script>
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (function () {
-                'use strict';
-
-                window.addEventListener('load', function () {
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.getElementsByClassName('needs-validation');
-
-                    // Loop over them and prevent submission
-                    var validation = Array.prototype.filter.call(forms, function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
-    </script>
-</body>
-
-</html>
+    <hr class="mb-4">

@@ -11,9 +11,7 @@ const Transaction = require('../models/transactions');
 
 /* GET home page. */
 
-//const period = moment().subtract(1, "days").format('M[-]YY');
-const period = '10-18';
-const currentDate = moment();
+const period=require('./utils/getPeriod');
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
     try {
@@ -144,7 +142,6 @@ router.get('/edit', (req, res, next) => {
             id,
             title: 'Detalles de Transacciones - Edit',
             period,
-            currentDate,
             categories,
             accounts,
             date: moment(transaction.date).add(1, 'days').format('DD/MM/YYYY'),

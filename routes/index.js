@@ -1,18 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const _ = require('lodash');
-const moment = require('moment');
-
 
 const Account = require('../models/accounts');
 const Budget = require('../models/budgets');
 const Transaction = require('../models/transactions');
 
-
-
-//const period = moment().format('M[-]YY');
-const period = '10-18';
-const currentDate = moment();
+const period=require('./utils/getPeriod');
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
     decimalCount = Math.abs(decimalCount);
@@ -50,14 +44,19 @@ router.get('/', function (req, res, next) {
           acm += transaction.amount;
         }
       });
+
+      var perc = Math.ceil((acm * 100) / budget.amount);
+
       return {
         cat: budget.category,
         prev: formatMoney(budget.amount),
         real: formatMoney(acm),
         diff: formatMoney(budget.amount - acm),
+        perc,
         prevNotFormat: budget.amount,
         realNotFormat: acm,
-        diffNotFormat: budget.amount - acm
+        diffNotFormat: budget.amount - acm,
+        alert: perc <= 100
       };
     });
 

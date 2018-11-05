@@ -1,25 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="http://www.cdcouncil.com/images/yellowIcon_barGraph.png">
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="http://www.cdcouncil.com/images/yellowIcon_barGraph.png">
 
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <!-- Bootstrap core CSS -->
+  <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+    crossorigin="anonymous">
 
 
-    <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/docs/4.1/examples/checkout/form-validation.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="https://getbootstrap.com/docs/4.1/examples/checkout/form-validation.css" rel="stylesheet">
 
-    <title>{{title}}</title>
-  
-  </head>
-  <body class="bg-light">
-    {{{body}}}
-  </body>
+  <title>{{title}}</title>
+
+</head>
+
+<body class="bg-light">
+
+  <div class="container">
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="http://www.cdcouncil.com/images/yellowIcon_barGraph.png" alt="" width="72"
+        height="72">
+      <h2>Finanzas Personales </h2>
+      <h4> {{title}}</h4>
+      <hr class="mb-4">
+      <p class="lead">Periodo : {{period}}</p>
+      <hr class="mb-4">
+
+      {{{body}}}
+
+    </div>
+  </div>
+
+  <hr class="mb-4">
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2017-2018 Meny</p>
+  </footer>
+  </div>
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+  <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+  <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script>
+
+
+  <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        'use strict';
+
+        window.addEventListener('load', function () {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+  </script>
+</body>
+
 </html>

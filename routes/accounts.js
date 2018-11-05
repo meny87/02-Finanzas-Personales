@@ -1,18 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const _ = require('lodash');
-const moment = require('moment');
-
+const period=require('./utils/getPeriod');
 
 const Account = require('../models/accounts');
-const Budget = require('../models/budgets');
-const Transaction = require('../models/transactions');
 
 /* GET home page. */
-
-const period = moment().format('M[-]YY');
-const currentDate = moment();
-
 
 router.get('/create', (req, res) => {
     res.render('accounts/create', {

@@ -1,141 +1,83 @@
-<!doctype html>
-<html lang="en">
+<div class="alert alert-secondary" role="alert">
+    <h4>Edicion de transacciones</h4>
+</div>
 
+<form class="needs-validation" action="/transactions/update" method="POST" novalidate>
 
-<body class="bg-light">
-
-
-    <div class="container">
-        <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="http://www.cdcouncil.com/images/yellowIcon_barGraph.png" alt=""
-                width="72" height="72">
-            <h2>Finanzas Personales </h2>
-            <h4> {{title}}</h4>
-            <hr class="mb-4">
-            <p class="lead">Periodo : {{period}}</p>
-            <hr class="mb-4">
+    <input type="hidden" name="id" value="{{id}}">
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label for="firstName">Fecha</label>
+            <input type="text" class="form-control" name="date" placeholder="" value="{{date}}" required>
+            <div class="invalid-feedback">
+                Selecciona una fecha.
+            </div>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="firstName">Importe</label>
+            <input type="text" class="form-control" name="amount" placeholder="" value="{{amount}}" required>
+            <div class="invalid-feedback">
+                Define el importe.
+            </div>
         </div>
 
-        <div class="alert alert-secondary" role="alert">
-            <h4>Edicion de transacciones</h4>
+        <div class="col-md-6 mb-3">
+            <label for="country">Categoría</label>
+            <select class="custom-select d-block w-100" name="category" required>
+
+                <option value="{{transactionItem}}">{{transactionItem}}</option>
+                {{#each categories}}
+                {{#if this}}
+                <option>{{this}}</option>
+                {{/if}}
+                {{/each}}
+            </select>
+            <div class="invalid-feedback">
+                Selecciona una categoría.
+            </div>
         </div>
 
-        <form class="needs-validation" action="/transactions/update" method="POST" novalidate>
 
-        <input type="hidden"  name="id" value="{{id}}">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="firstName">Fecha</label>
-                    <input type="text" class="form-control" name="date" placeholder="" value="{{date}}" required>
-                    <div class="invalid-feedback">
-                        Selecciona una fecha.
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <label for="firstName">Importe</label>
-                    <input type="text" class="form-control" name="amount" placeholder="" value="{{amount}}" required>
-                    <div class="invalid-feedback">
-                        Define el importe.
-                    </div>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label for="country">Categoría</label>
-                    <select class="custom-select d-block w-100" name="category" required>
-
-                        <option value="{{transactionItem}}">{{transactionItem}}</option>
-                        {{#each categories}}
-                        {{#if this}}
-                        <option>{{this}}</option>
-                        {{/if}}
-                        {{/each}}
-                    </select>
-                    <div class="invalid-feedback">
-                        Selecciona una categoría.
-                    </div>
-                </div>
-
-
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-3 mb-3">
-                    <label for="country">Cuenta</label>
-                    <select class="custom-select d-block w-100" name="account" required>
-                        <option value="{{account}}">{{account}}</option>
-                        {{#each accounts}}
-                        {{#if this}}
-                        <option>{{ this }}</option>
-                        {{/if}}
-                        {{/each}}
-                    </select>
-                    <div class="invalid-feedback">
-                        Selecciona una cuenta.
-                    </div>
-                </div>
-                <div class="col-md-9 mb-3">
-                    <label for="firstName">Descpripción</label>
-                    <input type="text" class="form-control" name="description" placeholder="" value="{{description}}">
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <button class="btn btn-outline-success btn-lg btn-block" type="submit">Guardar Cambios a Transacción</button>
-                </div>
-            </div>
-            <hr class="mb-4">
-            <div class="row">
-
-                <div class="col-md-6 mb-3">
-                    <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/view">Ver todas las transacciones</a>
-                </div>
-               
-                <div class="col-md-6 mb-3">
-                    <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Ir a Dashboard</a>
-                </div>
-            </div>
-        </form>
     </div>
 
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2018 Meny</p>
-    </footer>
+    <div class="row">
+
+        <div class="col-md-3 mb-3">
+            <label for="country">Cuenta</label>
+            <select class="custom-select d-block w-100" name="account" required>
+                <option value="{{account}}">{{account}}</option>
+                {{#each accounts}}
+                {{#if this}}
+                <option>{{ this }}</option>
+                {{/if}}
+                {{/each}}
+            </select>
+            <div class="invalid-feedback">
+                Selecciona una cuenta.
+            </div>
+        </div>
+        <div class="col-md-9 mb-3">
+            <label for="firstName">Descpripción</label>
+            <input type="text" class="form-control" name="description" placeholder="" value="{{description}}">
+
+        </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script>
-    <script>
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (function () {
-                'use strict';
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <button class="btn btn-outline-success btn-lg btn-block" type="submit">Guardar Cambios a Transacción</button>
+        </div>
+    </div>
+    <hr class="mb-4">
+    <div class="row">
 
-                window.addEventListener('load', function () {
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.getElementsByClassName('needs-validation');
+        <div class="col-md-6 mb-3">
+            <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/view">Ver todas las
+                transacciones</a>
+        </div>
 
-                    // Loop over them and prevent submission
-                    var validation = Array.prototype.filter.call(forms, function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
-    </script>
-</body>
-
-</html>
+        <div class="col-md-6 mb-3">
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Ir a Dashboard</a>
+        </div>
+    </div>
+</form>

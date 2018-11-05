@@ -1,3 +1,8 @@
+const moment = require('moment');
+
+
+
+
 // const mongoose = require("./db/mongoose");
 // const Account = require("./models/accounts");
 // const Budget = require("./models/budgets");
@@ -127,7 +132,7 @@ var outcomeBudgets = [{
 
 
 
-console.log('incomeCategories', outBudgetTable);
+console.log('incomeCategories', outcomeBudgets);
 
 ic.forEach(i => {
     acm = 0;
@@ -155,3 +160,10 @@ var acm = 0;
 
 
 console.log('ACM', acm);
+
+
+
+
+console.log('currentMonth::', currentMonth);
+console.log('currentDay::', currentDay);
+console.log('period::', period);

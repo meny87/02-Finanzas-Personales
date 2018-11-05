@@ -1,126 +1,68 @@
-<!doctype html>
-<html lang="en">
+<div class="alert alert-secondary" role="alert">
+    <h4>Registro de Pagos a Tarjetas de Crédito</h4>
+</div>
 
 
-<body class="bg-light">
-    <div class="container">
-        <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="http://www.cdcouncil.com/images/yellowIcon_barGraph.png" alt=""
-                width="72" height="72">
-            <h2>Finanzas Personales </h2>
-            <h4> {{title}}</h4>
-            <hr class="mb-4">
-            <p class="lead">Periodo : {{period}}</p>
-            <hr class="mb-4">
+<form class="needs-validation" action="/transactions/saveCCPayment" method="POST" novalidate>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label for="firstName">Fecha</label>
+            <input type="date" class="form-control" name="date" placeholder="" value="{{currentDate}}" required>
+            <div class="invalid-feedback">
+                Selecciona una fecha.
+            </div>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="firstName">Importe</label>
+            <input type="text" class="form-control" name="amount" placeholder="" value="" required>
+            <div class="invalid-feedback">
+                Define el importe.
+            </div>
         </div>
 
-        <div class="alert alert-secondary" role="alert">
-            <h4>Registro de Pagos a Tarjetas de Crédito</h4>
+        <div class="col-md-3 mb-3">
+            <label for="country">Cuenta Origen</label>
+            <select class="custom-select d-block w-100" name="outcomeAccount" required>
+
+                <option value="">Seleccionar...</option>
+                {{#each debitAccounts}}
+                <option>{{this}}</option>
+                {{/each}}
+            </select>
+            <div class="invalid-feedback">
+                Selecciona una categoría.
+            </div>
         </div>
 
+        <div class="col-md-3 mb-3">
+            <label for="country">Cuenta Destino</label>
+            <select class="custom-select d-block w-100" name="incomeAccount" required>
 
-        <form class="needs-validation" action="/transactions/saveCCPayment" method="POST" novalidate>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="firstName">Fecha</label>
-                    <input type="date" class="form-control" name="date" placeholder="" value="{{currentDate}}" required>
-                    <div class="invalid-feedback">
-                        Selecciona una fecha.
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <label for="firstName">Importe</label>
-                    <input type="text" class="form-control" name="amount" placeholder="" value="" required>
-                    <div class="invalid-feedback">
-                        Define el importe.
-                    </div>
-                </div>
-
-                <div class="col-md-3 mb-3">
-                    <label for="country">Cuenta Origen</label>
-                    <select class="custom-select d-block w-100" name="outcomeAccount" required>
-
-                        <option value="">Seleccionar...</option>
-                        {{#each debitAccounts}}
-                        <option>{{this}}</option>
-                        {{/each}}
-                    </select>
-                    <div class="invalid-feedback">
-                        Selecciona una categoría.
-                    </div>
-                </div>
-
-                <div class="col-md-3 mb-3">
-                    <label for="country">Cuenta Destino</label>
-                    <select class="custom-select d-block w-100" name="incomeAccount" required>
-
-                        <option value="">Seleccionar...</option>
-                        {{#each creditAccounts}}
-                        <option>{{this}}</option>
-                        {{/each}}
-                    </select>
-                    <div class="invalid-feedback">
-                        Selecciona una categoría.
-                    </div>
-                </div>
+                <option value="">Seleccionar...</option>
+                {{#each creditAccounts}}
+                <option>{{this}}</option>
+                {{/each}}
+            </select>
+            <div class="invalid-feedback">
+                Selecciona una categoría.
             </div>
-
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <label for="firstName">Descpripción</label>
-                    <input type="text" class="form-control" name="description" placeholder="" value="">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-8 mb-3">
-                    <button class="btn btn-outline-success btn-lg btn-block" type="submit">Registrar Pago</button>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Ir a Dashboard</a>
-                </div>
-            </div>
-            <hr class="mb-4">
-          
-        </form>
+        </div>
     </div>
 
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2018 Meny</p>
-    </footer>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label for="firstName">Descpripción</label>
+            <input type="text" class="form-control" name="description" placeholder="" value="">
+        </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script>
-    <script>
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (function () {
-                'use strict';
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <button class="btn btn-outline-success btn-lg btn-block" type="submit">Registrar Pago</button>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Ir a Dashboard</a>
+        </div>
+    </div>
 
-                window.addEventListener('load', function () {
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.getElementsByClassName('needs-validation');
-
-                    // Loop over them and prevent submission
-                    var validation = Array.prototype.filter.call(forms, function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
-    </script>
-</body>
-
-</html>
+</form>

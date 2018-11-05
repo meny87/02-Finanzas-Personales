@@ -79,23 +79,6 @@ router.get('/', function (req, res, next) {
       };
     });
 
-    var transferBudgetTable = transfersBudget.map((budget) => {
-      acm = 0;
-      allTransactions.forEach((transaction) => {
-        if (transaction.type === 'Transfer' && transaction.category === budget.category) {
-          acm += transaction.amount;
-        }
-      });
-      return {
-        cat: budget.category,
-        prev: formatMoney(budget.amount),
-        real: formatMoney(acm),
-        diff: formatMoney(budget.amount - acm),
-        prevNotFormat: budget.amount,
-        realNotFormat: acm,
-        diffNotFormat: budget.amount - acm
-      };
-    });
 
     allAccounts = allAccounts.map((account) => {
       acmIncome = 0;
@@ -112,7 +95,17 @@ router.get('/', function (req, res, next) {
         }
       });
 
-      var totalBalance = (account.type === 'Debit' ? account.balance + acmIncome - acmOutcome : account.balance - acmIncome + acmOutcome);
+
+      var totalBalance = 0;
+
+      if (account.type === 'Debit') {
+        totalBalance = account.balance + acmIncome - acmOutcome;
+      } else if (account.type === 'Credit') {
+        totalBalance = account.balance - acmIncome + acmOutcome;
+      } else {
+        totalBalance = account.balance + acmIncome - acmOutcome;
+      };
+
 
       return {
         name: account.name,
@@ -140,46 +133,42 @@ router.get('/', function (req, res, next) {
       }
     });
 
+    cashAccounts = allAccounts.map(account => {
+      if (account.type === 'Cash') {
+        return account;
+      }
+    });
+
+    cashAccounts = cashAccounts.map(account => {
+      if (account) {
+        return account;
+      }
+    });
+
+    console.log('CASH ACCOUNTS::', cashAccounts);
+
     var debitSumUp = 0;
-    debitAccounts.forEach(account =>{
-      if (account){
+    debitAccounts.forEach(account => {
+      if (account) {
         debitSumUp += account.totalBalanceNoFormat;
       }
     });
 
     var creditSumUp = 0;
-    creditAccounts.forEach(account =>{
-      if (account){
+    creditAccounts.forEach(account => {
+      if (account) {
         creditSumUp += account.totalBalanceNoFormat;
       }
     });
 
-    var totalBalance = cashAccounts.balance + debitSumUp - creditSumUp;
+    var cashSumUp = 0;
+    cashAccounts.forEach(account => {
+      if (account) {
+        cashSumUp += account.totalBalanceNoFormat;
+      }
+    });
 
-    // creditAccounts = creditAccounts.map((account) => {
-
-    //   return {
-    //     name: account.name,
-    //     type: account.type,
-    //     balance: account.balance,
-    //     dueDay: account.dueDay,
-    //     paymentDate: account.paymentDate,
-    //     formattedBalance: formatMoney(account.balance)
-    //   }
-    // });
-
-    // debitAccounts = debitAccounts.map((account) => {
-    //   return {
-    //     name: account.name,
-    //     type: account.type,
-    //     balance: account.balance,
-    //     dueDay: account.dueDay,
-    //     paymentDate: account.paymentDate,
-    //     formattedBalance: formatMoney(account.balance)
-    //   }
-    // });
-
-    //console.log('CREDIT ACCOUNTS', creditAccounts);
+    var grandTotalBalance = cashSumUp + debitSumUp - creditSumUp;
 
     var summaryInfo = {
       totalIncome: formatMoney(_.sumBy(inBudgetTable, account => account.realNotFormat)),
@@ -190,25 +179,24 @@ router.get('/', function (req, res, next) {
       totalInPrev: formatMoney(_.sumBy(inBudgetTable, element => element.prevNotFormat)),
       totalInReal: formatMoney(_.sumBy(inBudgetTable, element => element.realNotFormat)),
       totalInDiff: formatMoney(_.sumBy(inBudgetTable, element => element.diffNotFormat)),
-      totalTrPrev: formatMoney(_.sumBy(transferBudgetTable, element => element.prevNotFormat)),
-      totalTrReal: formatMoney(_.sumBy(transferBudgetTable, element => element.realNotFormat)),
-      totalTrDiff: formatMoney(_.sumBy(transferBudgetTable, element => element.diffNotFormat))
+      totalSaving: formatMoney((_.sumBy(inBudgetTable, account => account.realNotFormat)) - (_.sumBy(outBudgetTable, account => account.realNotFormat))),
+      totalSavingPerc: (100 - ((_.sumBy(outBudgetTable, account => account.realNotFormat)) * 100 / (_.sumBy(inBudgetTable, account => account.realNotFormat)))).toFixed(2)
     };
 
     var data = {
       title: 'Dashboard',
       debitAccounts,
       creditAccounts,
-      cashAccounts: formatMoney(cashAccounts.balance),
+      cashAccounts,
       debitSumUp: formatMoney(debitSumUp),
       creditSumUp: formatMoney(creditSumUp),
-      totalBalance: formatMoney(totalBalance),
+      cashSumUp: formatMoney(cashSumUp),
       accountCount,
       outBudgetTable,
       inBudgetTable,
-      transferBudgetTable,
       period,
-      summaryInfo
+      summaryInfo,
+      grandTotalBalance: formatMoney(grandTotalBalance)
     };
 
     res.render('index', data);

@@ -194,4 +194,129 @@ router.post('/update', (req, res, next) => {
 
 });
 
+router.get('/credit', (req, res, next) => {
+
+    Promise.all([
+        Account.find({ type: { $in: ['Debit', 'Cash'] } }).select('name'),
+        Account.find({ type: 'Credit' }).select('name')
+    ]).then(([debitAccounts, creditAccounts]) => {
+
+        debitAccounts = debitAccounts.map(account => account.name);
+        creditAccounts = creditAccounts.map(account => account.name);
+
+
+        console.log("debitAccounts::", debitAccounts);
+        console.log("creditAccounts::", creditAccounts);
+
+        var obj = {
+            title: 'Detalles de Transacciones - CREDIT',
+            period,
+            debitAccounts,
+            creditAccounts
+        };
+
+
+        res.render('transactions/credit', obj);
+
+
+    }).catch(e => {
+    });
+});
+
+
+router.get('/cash', (req, res, next) => {
+
+    Promise.all([
+        Account.find({ type: { $in: ['Debit'] } }).select('name')
+    ]).then(([debitAccounts, creditAccounts]) => {
+
+        debitAccounts = debitAccounts.map(account => account.name);
+
+        console.log("debitAccounts::", debitAccounts);
+        console.log("creditAccounts::", creditAccounts);
+
+        var obj = {
+            title: 'Detalles de Transacciones - CASH',
+            period,
+            debitAccounts
+        };
+        res.render('transactions/cash', obj);
+    }).catch(e => {
+        console.log('ERROR::', e)
+    });
+});
+
+router.post('/saveCCPayment', (req, res) => {
+
+    var incomeTransaction = new Transaction(
+        {
+            date: req.body.date,
+            type: 'Income',
+            amount: req.body.amount,
+            account: req.body.incomeAccount,
+            category: 'Pago TC',
+            description: req.body.description,
+            period
+        }
+    );
+
+    var outcomeTransaction = new Transaction(
+        {
+            date: req.body.date,
+            type: 'Outcome',
+            amount: req.body.amount,
+            account: req.body.outcomeAccount,
+            category: 'Pago TC',
+            description: req.body.description,
+            period
+        }
+    );
+
+    console.log("INCOME TRANSACTION::", incomeTransaction);
+    console.log("OUTCOME TRANSACTION::", outcomeTransaction);
+
+    incomeTransaction.save((resultIncome) => {
+        outcomeTransaction.save((resultOutcome) => {
+            res.redirect('/transactions/view');
+        })
+    });
+});
+
+
+router.post('/saveCashTransfer', (req, res) => {
+
+    var incomeTransaction = new Transaction(
+        {
+            date: req.body.date,
+            type: 'Income',
+            amount: req.body.amount,
+            account: 'Cash',
+            category: 'Retiro Efectivo',
+            description: req.body.description,
+            period
+        }
+    );
+
+    var outcomeTransaction = new Transaction(
+        {
+            date: req.body.date,
+            type: 'Outcome',
+            amount: req.body.amount,
+            account: req.body.account,
+            category: 'Retiro Efectivo',
+            description: req.body.description,
+            period
+        }
+    );
+
+    console.log("INCOME TRANSACTION::", incomeTransaction);
+    console.log("OUTCOME TRANSACTION::", outcomeTransaction);
+
+    incomeTransaction.save((resultIncome) => {
+        outcomeTransaction.save((resultOutcome) => {
+            res.redirect('/transactions/view');
+        })
+    });
+});
+
 module.exports = router;

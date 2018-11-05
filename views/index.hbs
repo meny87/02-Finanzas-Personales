@@ -1,9 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-
 <body class="bg-light">
-
     <div class="container">
         <div class="py-5 text-center">
             <img class="d-block mx-auto mb-4" src="http://www.cdcouncil.com/images/yellowIcon_barGraph.png" alt=""
@@ -14,53 +12,70 @@
             <p class="lead">Periodo : {{period}}</p>
             <hr class="mb-4">
 
-
-
             <div class="row">
                 <div class="col-8">
                     <div class="card">
                         <h4 class="card-header">
-                            Resumen
+                            Ahorro
                         </h4>
                         <div class="card-body">
                             <p>INGRESO TOTAL: ${{summaryInfo.totalIncome}} </p>
                             <p>GASTO TOTAL: ${{summaryInfo.totalOutcome}} </p>
                             <hr>
-                            <h5>AHORRO ACTUAL: ${{summaryInfo.totalBalance}}</h5>
+                            <h5>AHORRO ACTUAL: ${{summaryInfo.totalSaving}}</h5>
+                            <h1>{{summaryInfo.totalSavingPerc}}%</h1>
+
                         </div>
                     </div>
+                    <br>
+                    <div class="card">
+                        <h4 class="card-header">
+                            Deuda
+                        </h4>
+                        <div class="card-body">
+                            <p>DEBO: ${{summaryInfo.totalIncome}} </p>
+                            <p>ME DEBEN: ${{summaryInfo.totalOutcome}} </p>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-4">
                     <div class="card">
                         <h4 class="card-header">
                             Opciones
                         </h4>
-
                         <div class="card-body">
-                            <a class="btn btn-primary btn-sm btn-block" href="/transactions" role="button">Registrar Transacción</a>
-                            <a class="btn btn-primary btn-sm btn-block" href="/transactions/view" role="button">Ver todas las
-                                Transacciones</a>
-                            <a class="btn btn-primary btn-sm btn-block" href="#" role="button">Pagar Tarjeta de Crédito</a>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Transacciones</h5>
+                                    <hr class="mb-4">
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions" role="button">Registrar</a>
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/view" role="button">Ver
+                                        Todas</a>
+                                </div>
+                            </div>
+                            <br>
+                            <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Pagar
+                                Tarjeta de Crédito</a>
+                            <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Retiro
+                                de Efectivo</a>
+                            <a class="btn btn-outline-primary btn-lg btn-block" href="/transactions/credit" role="button">Administrar
+                                Deudas</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
 
-
         <div class="row">
-
             <div class="col-md-4 order-md-2 mb-4">
-
                 <div class="card">
                     <h4 class="card-header d-flex justify-content-between align-items-center mb-3">
                         <span class="text">Cuentas</span>
-                            <span class="badge badge-secondary badge-pill">{{accountCount}}</span>
-                            <a href="/accounts/create" class="badge badge-light">
-                                <i class="far fa-edit"></i>
-                            </a>
+                        <span class="badge badge-secondary badge-pill">{{accountCount}}</span>
+                        <a href="/accounts/create" class="badge badge-light">
+                            <i class="far fa-edit"></i>
+                        </a>
                     </h4>
                     <div class="card-body">
                         <p class="card-text">
@@ -70,8 +85,24 @@
                                     <div class="text-primary">
                                         <h6 class="my-0">EFECTIVO</h6>
                                     </div>
-                                    <span class="text-primary">${{cashAccounts}}</span>
+                                    <span class="text-primary">${{cashSumUp}}</span>
                                 </li>
+
+                                {{#cashAccounts}}
+                                {{#if this}}
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">
+
+                                            <small class="text-muted">Balance Inicial: ${{formattedBalance}}</small><br>
+                                            <small class="text-muted">Gastos del Mes: ${{acmOutcome}}</small><br>
+                                            <small class="text-muted">Retiros del Mes: ${{acmIncome}}</small>
+                                        </h6>
+                                    </div>
+                                </li>
+                                {{/if}}
+                                {{/cashAccounts}}
+
                                 <li class="list-group-item d-flex justify-content-between bg-light">
                                     <div class="text-success">
                                         <h6 class="my-0">DÉBITO</h6>
@@ -126,17 +157,12 @@
 
                                 <li class="list-group-item d-flex justify-content-between">
                                     <span>Total</span>
-                                    <strong>${{totalBalance}}</strong>
+                                    <strong>${{grandTotalBalance}}</strong>
                                 </li>
                             </ul>
                         </p>
-
                     </div>
                 </div>
-
-
-
-
             </div>
 
             <div class="col-md-8 order-md-1">
@@ -269,6 +295,8 @@
     <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
     <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
     <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script>
+
+
     <script>
             // Example starter JavaScript for disabling form submissions if there are invalid fields
             (function () {

@@ -11,7 +11,7 @@ const Transaction = require('../models/transactions');
 
 /* GET home page. */
 
-const period=require('./utils/getPeriod');
+const period = require('./utils/getPeriod');
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
     try {
@@ -99,13 +99,13 @@ router.get('/', (req, res, next) => {
         var obj = {
             title: 'Detalles de Transacciones - ' + transType,
             period,
-            currentDate,
             categories,
             accounts
         };
         // console.log("OBJ::", obj)
         res.render('transactions/create', obj);
     }).catch((e) => {
+        console.log('ERROR', e);
         res.render('error', { e })
     });
 });
@@ -158,6 +158,70 @@ router.get('/edit', (req, res, next) => {
             console.log("ERROR::", e)
             res.render('error', { e })
         });
+
+});
+
+router.get('/deleteDetails', (req, res, next) => {
+    var id = mongoose.Types.ObjectId(req.query.id);
+
+    Promise.all([
+        Budget.find({ period }).select('type category').sort({ type: -1 }),
+        Account.find().select('name').sort('type'),
+        Transaction.findById(id)
+    ]).then(([budgets, accountsName, transaction]) => {
+        var transactionItem = `${transaction.type} ::: ${transaction.category}`
+        var categories = Object.entries(budgets).map(budget => {
+            var selectItem = `${budget[1].type} ::: ${budget[1].category}`;
+            if (selectItem !== transactionItem) {
+                return selectItem;
+            }
+        });
+
+        var accounts = Object.values(accountsName).map(account => {
+            if (transaction.account !== account.name) {
+                return account.name;
+            }
+        });
+
+        // console.log("TRANSACTION::", transaction);
+        // console.log("CATEGORIES::", categories);
+        // console.log("ACCOUNTS::", accounts);
+
+
+        var obj = {
+            id,
+            title: 'Eliminar Transacción',
+            period,
+            categories,
+            accounts,
+            date: moment(transaction.date).add(1, 'days').format('DD/MM/YYYY'),
+            amount: formatMoney(transaction.amount),
+            type: transaction.type,
+            category: transaction.category,
+            account: transaction.account,
+            description: transaction.description,
+            transactionItem
+        };
+        res.render('transactions/delete', obj);
+    })
+        .catch(e => {
+            console.log("ERROR::", e)
+            res.render('error', { e })
+        });
+
+});
+
+router.post('/delete', (req, res, next) => {
+
+    Transaction.findByIdAndRemove(req.body.id , (err, doc) => {
+        if (!err) {
+            console.log('DOCUMENT::', doc);
+            res.redirect('/transactions/view');
+        }
+        else {
+            res.redirect('error', err);
+        }
+    });
 
 });
 

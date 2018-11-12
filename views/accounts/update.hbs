@@ -1,0 +1,66 @@
+<div class="alert alert-success" role="alert">
+    <h4>Actualizar información de Cuentas</h4>
+</div>
+
+<form class="needs-validation" action="/accounts/update" method="POST" novalidate>
+<input type="hidden" name="id" value="{{account._id}}"></input>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label for="firstName">Nombre</label>
+            <input type="text" class="form-control" name="name" placeholder="" value ="{{account.name}}" required>
+            <div class="invalid-feedback">
+                Escribe Nombre de la Cuenta.
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <label for="country">Categoría</label>
+            <select class="custom-select d-block w-100" name="type" required>
+                <option value="{{account.type}}">{{account.type}}</option>
+                {{#if credit}}
+                <option>Debit</option>
+                {{else}}
+                <option>Credit</option>
+                {{/if}}
+            </select>
+            <div class="invalid-feedback">
+                Selecciona una categoría.
+            </div>
+        </div>
+
+        <div class="col-md-2 mb-3">
+            <label for="country">Balance Inicial</label>
+            <input type="text" class="form-control" name="balance" placeholder="" value="{{account.balance}}" required>
+            <div class="invalid-feedback">
+                Define Balance Inicial.
+            </div>
+        </div>
+        {{#if credit}}
+        <div class="col-md-2 mb-3">
+            <label for="country">Día de Corte</label>
+            <input type="text" class="form-control" name="dueDay" placeholder="" value="{{account.dueDay}}"required>
+            <div class="invalid-feedback">
+                Especifica día de corte.
+            </div>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="country">Día de Pago</label>
+            <input type="text" class="form-control" name="paymentDay" placeholder="" value="{{account.paymentDay}}"required>
+            <div class="invalid-feedback">
+                Especifica día de Pago.
+            </div>
+        </div>
+        {{/if}}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="/accounts/viewAll">Ver Todas las cuentas</a>
+        </div>
+        <div class="col-md-6 mb-3">
+            <button class="btn btn-outline-success btn-lg btn-block" type="submit"> Guardar Cambios</button>
+        </div>
+    </div>
+
+
+</form>

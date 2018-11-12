@@ -1,0 +1,77 @@
+<div class="alert alert-success" role="alert">
+    <h4>Edición de Cuentas</h4>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        Débito
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Balance Inicial</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#debitAccounts}}
+                    <tr>
+                        <th scope="row">{{name}}</th>
+                        <td>${{balance}}</td>
+                        <td><a href="/accounts/update?id={{_id}}" class="badge badge-light"> <i class="far fa-edit"></i></a></td>
+                        <td><a href="/accounts/delete?id={{_id}}" class="badge badge-light"> <i class="far fa-trash-alt"></i></a></td>
+                    </tr>
+                    {{/debitAccounts}}
+                </tbody>
+            </table>
+        </p>
+    </div>
+</div>
+
+<hr class="mb-4">
+
+<div class="card">
+    <div class="card-header">
+        Crédito
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Balance Inicial</th>
+                        <th scope="col">Fecha de Corte</th>
+                        <th scope="col">Fecha Pago</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#creditAccounts}}
+                    <tr>
+                        <th scope="row">{{name}}</th>
+                        <td>${{balance}}</td>
+                        <td>{{dueDay}}</td>
+                        <td>{{paymentDay}}</td>
+                        <td><a href="/accounts/update?credit=true&id={{_id}}" class="badge badge-light"> <i class="far fa-edit"></i></a></td>
+                        <td><a href="/accounts/delete?credit=true&id={{_id}}" class="badge badge-light"> <i class="far fa-trash-alt"></i></a></td>
+                    </tr>
+                    {{/creditAccounts}}
+                </tbody>
+            </table>
+        </p>
+    </div>
+</div>
+
+<hr class="mb-4">
+<div class="row">
+    <div class="col-md-12 mb-3">
+        <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Volver a Dashboard</a>
+    </div>
+</div>

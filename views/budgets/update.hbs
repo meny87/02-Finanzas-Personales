@@ -1,0 +1,38 @@
+<form class="needs-validation" action="/update" method="POST" novalidate>
+    <input type="hidden" name="id"  value="{{budget.id}}">
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label for="firstName">Categoría</label>
+            <input type="text" class="form-control" name="category" placeholder="" value="{{budget.category}}" required>
+            <div class="invalid-feedback">
+                Selecciona una fecha.
+            </div>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="firstName">Importe</label>
+            <input type="text" class="form-control" name="amount" placeholder="" value="{{budget.amount}}" required>
+            <div class="invalid-feedback">
+                Define el importe.
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="country">Tipo</label>
+            <input type="text" class="form-control" name="type" placeholder="" value="{{budget.type}}" disabled>
+            <div class="invalid-feedback">
+                Selecciona una categoría.
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Regresar</a>
+        </div>
+        <div class="col-md-6 mb-3">
+            <button class="btn btn-outline-success btn-lg btn-block" type="submit">Guardar</button>
+        </div>
+    </div>
+
+
+</form>

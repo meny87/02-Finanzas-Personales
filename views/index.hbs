@@ -181,6 +181,8 @@
                                 <th scope="col">Previsto</th>
                                 <th scope="col">Real</th>
                                 <th scope="col">Diferencia</th>
+                                <th scope="col">Editar</th>
+                                <th scope="col">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -194,6 +196,10 @@
                                 <td>${{prev}}</td>
                                 <td>${{real}}</td>
                                 <td>${{diff}}</td>
+                                <td><a href="/update?id={{id}}" class="badge badge-light"> <i
+                                            class="far fa-edit"></i></a></td>
+                                <td><a href="/delete?id={{id}}" class="badge badge-light"> <i
+                                            class="far fa-trash-alt"></i></a></td>
                             </tr>
                             {{/inBudgetTable}}
 
@@ -237,6 +243,8 @@
                                 <th scope="col">Real</th>
                                 <th scope="col">Diferencia</th>
                                 <th scope="col">Restante</th>
+                                <th scope="col">Editar</th>
+                                <th scope="col">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -251,6 +259,10 @@
                                 <td>${{real}}</td>
                                 <td>${{diff}}</td>
                                 <td>{{perc}}%</td>
+                                <td><a href="/update?id={{id}}" class="badge badge-light"> <i
+                                            class="far fa-edit"></i></a></td>
+                                <td><a href="/delete?id={{id}}" class="badge badge-light"> <i
+                                            class="far fa-trash-alt"></i></a></td>
                             </tr>
                             {{/outBudgetTable}}
                             <tr>

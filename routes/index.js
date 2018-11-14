@@ -6,7 +6,7 @@ const Account = require('../models/accounts');
 const Budget = require('../models/budgets');
 const Transaction = require('../models/transactions');
 
-const period=require('./utils/getPeriod');
+const period = require('./utils/getPeriod');
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
     decimalCount = Math.abs(decimalCount);
@@ -22,6 +22,79 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
     console.log(e)
   }
 };
+
+router.get('/update', (req, res) => {
+  Budget.findById(req.query.id, (err, budget) => {
+    if (err) {
+      res.render('error', err);
+    } else {
+      var data = {
+        title: 'Editar Categoría',
+        period,
+        budget
+      };
+
+      res.render('./budgets/update', data);
+    }
+  });
+
+});
+
+router.post('/update', (req, res) => {
+
+  var budget = {
+    category: req.body.category,
+    amount: req.body.amount
+  }
+
+  console.log('BUDGET::', budget);
+
+  Budget.findOneAndUpdate({ _id: req.body.id }, { $set: budget }, { new: true }
+  ).then(t => {
+    console.log('T::', t);
+    res.redirect('/');
+  }).catch(err => {
+    console.log('ERROR ::', err);
+    res.render('error', err);
+  });
+});
+
+router.get('/delete', (req, res) => {
+  Budget.findById(req.query.id, (err, budget) => {
+    if (err) {
+      res.render('error', err);
+    } else {
+      budget = {
+        id : budget._id,
+        category: budget.category,
+        amount: formatMoney(budget.amount),
+        type: budget.type
+      };
+
+      var data = {
+        title: 'Eliminar Categoría',
+        period,
+        budget
+      };
+
+      res.render('./budgets/delete', data);
+    }
+  });
+});
+
+router.post('/delete', (req, res) => {
+  console.log('BODY:::', req.body);
+  Budget.findByIdAndRemove(req.body.id, (err, doc) => {
+    if (!err) {
+      console.log('DOCUMENT::', doc);
+      res.redirect('/');
+    }
+    else {
+      res.redirect('error', err);
+    }
+  });
+
+});
 
 router.get('/', function (req, res, next) {
 
@@ -48,6 +121,7 @@ router.get('/', function (req, res, next) {
       var perc = Math.ceil((acm * 100) / budget.amount);
 
       return {
+        id: budget._id,
         cat: budget.category,
         prev: formatMoney(budget.amount),
         real: formatMoney(acm),
@@ -68,6 +142,7 @@ router.get('/', function (req, res, next) {
         }
       });
       return {
+        id: budget._id,
         cat: budget.category,
         prev: formatMoney(budget.amount),
         real: formatMoney(acm),
@@ -144,7 +219,7 @@ router.get('/', function (req, res, next) {
       }
     });
 
-    console.log('CASH ACCOUNTS::', cashAccounts);
+    //console.log('CASH ACCOUNTS::', cashAccounts);
 
     var debitSumUp = 0;
     debitAccounts.forEach(account => {

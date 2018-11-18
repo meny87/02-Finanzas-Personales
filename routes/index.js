@@ -104,9 +104,9 @@ router.get('/', function (req, res, next) {
     Account.findOne({ type: 'Cash' }),
     Account.find({}),
     Account.countDocuments({}),
-    Budget.find({ type: 'Outcome', period }),
-    Budget.find({ type: 'Income', period }),
-    Budget.find({ type: 'Transfer', period }),
+    Budget.find({ type: 'Outcome', period }).sort({ category: 1 }),
+    Budget.find({ type: 'Income', period }).sort({ category: 1 }),
+    Budget.find({ type: 'Transfer', period }).sort({ category: 1 }),
     Transaction.find({ period }).select('type amount category account')
   ]).then(([debitAccounts, creditAccounts, cashAccounts, allAccounts, accountCount, outcomesBudget, incomesBudget, transfersBudget, allTransactions]) => {
 
@@ -175,7 +175,8 @@ router.get('/', function (req, res, next) {
       if (account.type === 'Debit') {
         totalBalance = account.balance + acmIncome - acmOutcome;
       } else if (account.type === 'Credit') {
-        totalBalance = account.balance - acmIncome + acmOutcome;
+        //totalBalance = account.balance - acmIncome + acmOutcome;
+        totalBalance = acmOutcome;
       } else {
         totalBalance = account.balance + acmIncome - acmOutcome;
       };

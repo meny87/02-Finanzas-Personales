@@ -176,7 +176,7 @@ router.get('/', function (req, res, next) {
         totalBalance = account.balance + acmIncome - acmOutcome;
       } else if (account.type === 'Credit') {
         //totalBalance = account.balance - acmIncome + acmOutcome;
-        totalBalance = acmOutcome;
+        totalBalance = account.balance + acmOutcome;
       } else {
         totalBalance = account.balance + acmIncome - acmOutcome;
       };

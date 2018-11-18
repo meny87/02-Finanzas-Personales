@@ -29,7 +29,12 @@
         </div>
 
         <div class="col-md-2 mb-3">
-            <label for="country">Balance Inicial</label>
+             {{#if credit}}
+                <<label for="country">Deuda Inicial</label>
+                {{else}}
+                <label for="country">Balance Inicial</label>
+                {{/if}}
+            
             <input type="text" class="form-control" name="balance" placeholder="" value="{{account.balance}}" required>
             <div class="invalid-feedback">
                 Define Balance Inicial.

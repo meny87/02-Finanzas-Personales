@@ -66,11 +66,13 @@ router.get('/view', (req, res) => {
     ]).then(([incomes, outcomes]) => {
         console.log("INCOMES", incomes)
         var incomesTable = incomes.map(income => {
-            return ({ id: income._id, date: moment(income.date).add(1, 'days').format('DD/MMM/YYYY'), amount: formatMoney(income.amount), type: income.type, category: income.category, account: income.account, description: income.description });
+            //return ({ id: income._id, date: moment(income.date).add(1, 'days').format('DD/MMM/YYYY'), amount: formatMoney(income.amount), type: income.type, category: income.category, account: income.account, description: income.description });
+            return ({ id: income._id, date: moment(income.date).format('DD/MMM/YYYY'), amount: formatMoney(income.amount), type: income.type, category: income.category, account: income.account, description: income.description });
         });
 
         var outcomesTable = outcomes.map(outcome => {
-            return ({ id: outcome._id, date: moment(outcome.date).add(1, 'days').format('DD/MMM/YYYY'), amount: formatMoney(outcome.amount), type: outcome.type, category: outcome.category, account: outcome.account, description: outcome.description });
+            //return ({ id: outcome._id, date: moment(outcome.date).add(1, 'days').format('DD/MMM/YYYY'), amount: formatMoney(outcome.amount), type: outcome.type, category: outcome.category, account: outcome.account, description: outcome.description });
+            return ({ id: outcome._id, date: moment(outcome.date).format('DD/MMM/YYYY'), amount: formatMoney(outcome.amount), type: outcome.type, category: outcome.category, account: outcome.account, description: outcome.description });
         });
 
         var obj = {
@@ -144,7 +146,8 @@ router.get('/edit', (req, res, next) => {
             period,
             categories,
             accounts,
-            date: moment(transaction.date).add(1, 'days').format('DD/MM/YYYY'),
+            //date: moment(transaction.date).add(1, 'days').format('DD/MM/YYYY'),
+            date: moment(transaction.date).format('DD/MM/YYYY'),
             amount: transaction.amount,
             type: transaction.type,
             category: transaction.category,
@@ -194,7 +197,8 @@ router.get('/deleteDetails', (req, res, next) => {
             period,
             categories,
             accounts,
-            date: moment(transaction.date).add(1, 'days').format('DD/MM/YYYY'),
+            //date: moment(transaction.date).add(1, 'days').format('DD/MM/YYYY'),
+            date: moment(transaction.date).format('DD/MM/YYYY'),
             amount: formatMoney(transaction.amount),
             type: transaction.type,
             category: transaction.category,

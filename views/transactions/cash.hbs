@@ -1,65 +1,53 @@
-<div class="container">
-    <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="http://www.cdcouncil.com/images/yellowIcon_barGraph.png" alt="" width="72"
-            height="72">
-        <h2>Finanzas Personales </h2>
-        <h4> {{title}}</h4>
-        <hr class="mb-4">
-        <p class="lead">Periodo : {{period}}</p>
-        <hr class="mb-4">
-    </div>
-
-    <div class="alert alert-secondary" role="alert">
-        <h4>Registro de Retiros en Efectivo</h4>
-    </div>
-
-
-    <form class="needs-validation" action="/transactions/saveCashTransfer" method="POST" novalidate>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-                <label for="firstName">Fecha</label>
-                <input type="date" class="form-control" name="date" placeholder="" value="{{currentDate}}" required>
-                <div class="invalid-feedback">
-                    Selecciona una fecha.
-                </div>
-            </div>
-            <div class="col-md-2 mb-3">
-                <label for="firstName">Importe</label>
-                <input type="text" class="form-control" name="amount" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                    Define el importe.
-                </div>
-            </div>
-
-            <div class="col-md-3 mb-3">
-                <label for="country">Cuenta de Retiro</label>
-                <select class="custom-select d-block w-100" name="account" required>
-
-                    <option value="">Seleccionar...</option>
-                    {{#each debitAccounts}}
-                    <option>{{this}}</option>
-                    {{/each}}
-                </select>
-                <div class="invalid-feedback">
-                    Selecciona una categoría.
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-3">
-                <label for="firstName">Descpripción</label>
-                <input type="text" class="form-control" name="description" placeholder="" value="">
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-8 mb-3">
-                <button class="btn btn-outline-success btn-lg btn-block" type="submit">Registrar Pago</button>
-            </div>
-            <div class="col-md-4 mb-3">
-                <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Ir a Dashboard</a>
-            </div>
-        </div>
-        <hr class="mb-4">
-    </form>
+<div class="alert alert-secondary" role="alert">
+    <h4>Registro de Retiros en Efectivo</h4>
 </div>
+
+
+<form class="needs-validation" action="/transactions/saveCashTransfer" method="POST" novalidate>
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <label for="firstName">Fecha</label>
+            <input type="date" class="form-control" name="date" placeholder="" value="{{currentDate}}" required>
+            <div class="invalid-feedback">
+                Selecciona una fecha.
+            </div>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label for="firstName">Importe</label>
+            <input type="text" class="form-control" name="amount" placeholder="" value="" required>
+            <div class="invalid-feedback">
+                Define el importe.
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <label for="country">Cuenta de Retiro</label>
+            <select class="custom-select d-block w-100" name="account" required>
+
+                <option value="">Seleccionar...</option>
+                {{#each debitAccounts}}
+                <option>{{this}}</option>
+                {{/each}}
+            </select>
+            <div class="invalid-feedback">
+                Selecciona una categoría.
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label for="firstName">Descpripción</label>
+            <input type="text" class="form-control" name="description" placeholder="" value="">
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <button class="btn btn-outline-success btn-lg btn-block" type="submit">Registrar Pago</button>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="/">Ir a Dashboard</a>
+        </div>
+    </div>
+    <hr class="mb-4">
+</form>
